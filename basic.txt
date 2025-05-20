@@ -1,0 +1,10 @@
+we are using ws library
+Now initialize empty websocket server
+
+Change the package.json, in the script 
+"scripts": {
+    "build": "tsc -b",
+    "start": "node dist/index.js"
+  },
+
+now run npm run build and then npm run start, it will run the dist/index.js file
