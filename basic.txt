@@ -8,3 +8,27 @@ Change the package.json, in the script
   },
 
 now run npm run build and then npm run start, it will run the dist/index.js file
+
+If user1 is connected to ws1 server and user2 is connected to ws2 server, if a messages goes to ws2, it should gets rolled back to ws1 server also
+through a pub sub, starting a redis pub sub locally
+
+Starting redis locally, using command
+docker run -p 6379:6379 redis 
+
+getting access to redis command line interface, using command 
+docker exec -it container_id redis-cli
+
+Redis lets us, create a queue, it lets you store data like a database, it also lets you create a pub sub 
+
+When does my subscriber, subscribe to a specific room, it subscribes when atleast user comes and says hey i want to connect to room1
+
+If browser1 sends hi there, on room1 (ws1), it needs to somehow reach ws2, so that ws2 can forward the message to browser2
+which means when browser2 says i want to subscribe to room1, the websocket server also needs to say, i am subscribed to room1 on the pubsub
+I am subscribe to room1 on the pubsub, and now if another browser3 comes and says i also want to subscribe to room1, then ws2 doesnot need to resubscribe to room1 
+
+When the first person came, then the websocket server connects to the pubsub 
+This is how in a distributed websocket server, where 2 people are interested in the same room, are connected to different websocket servers can receive messages, without being stuck on a single server
+using pubsub
+
+
+When the user unsubscribers or when the users leaves ws.on("close", ); we should apply the same logic 
